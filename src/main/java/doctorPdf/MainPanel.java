@@ -6,6 +6,8 @@ import javax.swing.SwingConstants;
 
 public class MainPanel extends JPanel{
 	
+	private static final long serialVersionUID = 7759048602308033969L;
+
 	public MainPanel() {
 		setLayout(null);
 		
