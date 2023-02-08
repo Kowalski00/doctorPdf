@@ -1,5 +1,11 @@
 package doctorPdf;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import com.itextpdf.forms.PdfAcroForm;
@@ -22,9 +28,62 @@ import com.itextpdf.pdfcleanup.PdfCleaner;
 import com.itextpdf.pdfcleanup.autosweep.CompositeCleanupStrategy;
 import com.itextpdf.pdfcleanup.autosweep.RegexBasedCleanupStrategy;
 
-public class main {
+import javax.swing.*;
 
-	public static void main(String[] args) throws IOException {
+public class main extends JFrame{
+	
+	static JPanel MainPanel;
+
+	public static void main(String[] args) {
+		
+		main frame = new main();
+		frame.setVisible(true);
+		
+		System.out.println("Finished");
+	}
+	
+	public main() {
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 508, 375);
+		
+		setTitle("PDF Generator");
+		
+		getContentPane().add(new MainPanel());
+		
+		JMenuBar menuBar = new JMenuBar();
+        
+		JMenuItem menuMain = new JMenuItem("Gerador");
+		JMenuItem menuHelper = new JMenuItem("Ajuda");
+        
+        menuMain.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent event) {
+        		GeneratorPanel genPanel = new GeneratorPanel();
+        		genPanel.setBorder(BorderFactory.createTitledBorder("Gerador"));
+        		getContentPane().removeAll();
+        		getContentPane().add(genPanel, BorderLayout.CENTER);
+        		getContentPane().doLayout();
+    		}
+        });
+        
+        menuHelper.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent event) {
+        		HelpPanel helpPanel = new HelpPanel();
+        		helpPanel.setBorder(BorderFactory.createTitledBorder("Ajuda"));
+        		getContentPane().removeAll();
+        		getContentPane().add(helpPanel, BorderLayout.CENTER);
+        		getContentPane().doLayout();
+    		}
+        });
+        
+        menuBar.add(menuMain);
+        menuBar.add(menuHelper);
+        setJMenuBar(menuBar);
+        
+	}
+	
+	private void generatePdf() throws IOException{
+		
 		PdfReader reader = new PdfReader("src/main/resources/test.pdf");
 	    PdfWriter writer = new PdfWriter("src/main/resources/test-fixed.pdf");
 	    PdfDocument pdfDocument = new PdfDocument(reader, writer);
@@ -41,21 +100,6 @@ public class main {
 		}
 	    
 		pdfDocument.close();
-		
-		System.out.println("Finished");
-	}
-	
-	public static void addContentToDocument(PdfDocument pdfDocument) {
-		
-		PdfFormField personal = PdfFormField.createEmptyField(pdfDocument);
-		personal.setFieldName("information");
-		PdfTextFormField name = PdfFormField.createText(pdfDocument, new Rectangle(35, 400, 100, 30), "name", "");
-		personal.addKid(name);
-		PdfAcroForm.getAcroForm(pdfDocument, true).addField(personal, pdfDocument.getFirstPage());
-		
-		PdfAnnotation ann = new PdfTextAnnotation(new Rectangle(40, 435, 0, 0)).setTitle(new PdfString("name")).setContents("Your name");
-		pdfDocument.getPage(2).addAnnotation(ann);
-		
 		
 	}
 
