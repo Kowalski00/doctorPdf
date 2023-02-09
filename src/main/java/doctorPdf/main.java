@@ -73,28 +73,5 @@ public class main extends JFrame{
         setJMenuBar(menuBar);
         
 	}
-	
-	private void generatePdf() throws IOException{
-		
-		PdfReader reader = new PdfReader("src/main/resources/test.pdf");
-	    PdfWriter writer = new PdfWriter("src/main/resources/test-fixed.pdf");
-	    PdfDocument pdfDocument = new PdfDocument(reader, writer);
-		
-		CompositeCleanupStrategy strategy = new CompositeCleanupStrategy();
-		strategy.add(new RegexBasedCleanupStrategy("DESENVOLVIMENTO DE SOFTWARES LTDA").setRedactionColor(ColorConstants.WHITE));
-		PdfCleaner.autoSweepCleanUp(pdfDocument, strategy);
-
-		for (IPdfTextLocation location : strategy.getResultantLocations()) {
-		    PdfPage page = pdfDocument.getPage(location.getPageNumber() + 1);
-		    PdfCanvas pdfCanvas = new PdfCanvas(page.newContentStreamAfter(), page.getResources(), page.getDocument());
-		    Canvas canvas = new Canvas(pdfCanvas, location.getRectangle());
-		    canvas.add(new Paragraph("PDF Editor-Generator").setFontSize(8).setMarginTop(0f));
-		    canvas.close();
-		}
-	    
-		pdfDocument.close();
-		
-	}
-
 }
 
