@@ -17,7 +17,7 @@ public class GeneratorPanel extends JPanel implements ActionListener{
 	
 	private JTextField inputNameTextField;
 	private JButton generateButton, pathSelectionButton;
-	private JLabel selectedPathLabel;
+	private JTextField selectedPathLabel;
 	
 	private String selectedPath;
 
@@ -39,9 +39,9 @@ public class GeneratorPanel extends JPanel implements ActionListener{
 		pathLabel.setBounds(25, 150, 350, 30);
 		add(pathLabel);
 		
-		selectedPathLabel = new JLabel();
-		selectedPathLabel.setFont(new Font("Tahoma", Font.ITALIC, 12));
-		selectedPathLabel.setBounds(25, 150, 375, 30);
+		selectedPathLabel = new JTextField();  
+		selectedPathLabel.setBounds(200, 150, 300, 30);  
+		selectedPathLabel.setEditable(false);
 		add(selectedPathLabel);
 		
 		pathSelectionButton = new JButton("Selecione...");
@@ -93,7 +93,7 @@ public class GeneratorPanel extends JPanel implements ActionListener{
 	        
 	        selectedPath = fileChooser.getSelectedFile().toString();
 	        
-	        selectedPathLabel.setName(selectedPath);
+	        selectedPathLabel.setText(selectedPath);
 	        selectedPathLabel.setVisible(true);
 
 	        System.out.println( fileChooser.getSelectedFile() ); // f.getSelectedFile() is the correct function
