@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,8 +15,11 @@ import javax.swing.JTextField;
 public class GeneratorPanel extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 2067580022728473760L;
+	private static final int initialXPosition = 25;
+	private static final String[] fontSize = {"4","5","6","7","8","9","10","11","12","14","16","18"};
 	
 	private JTextField inputNameTextField;
+	private JComboBox comboBoxFontSize;
 	private JButton generateButton, pathSelectionButton;
 	private JTextField selectedPathLabel;
 	
@@ -27,30 +31,39 @@ public class GeneratorPanel extends JPanel implements ActionListener{
 		
 		JLabel inputLabel = new JLabel("Insira o nome completo do Paciente:");
 		inputLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		inputLabel.setBounds(25, 50, 350, 30);
+		inputLabel.setBounds(initialXPosition, 50, 350, 30);
 		add(inputLabel);
 		
 		inputNameTextField = new JTextField();  
-		inputNameTextField.setBounds(25,90,350,20);
+		inputNameTextField.setBounds(initialXPosition,90,350,20);
 		add(inputNameTextField);
+		
+		JLabel fontLabel = new JLabel("Selecione o tamanho da fonte: ");
+		fontLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		fontLabel.setBounds(initialXPosition, 120, 350, 30);
+		add(fontLabel);
+		
+		comboBoxFontSize = new JComboBox( fontSize );
+		comboBoxFontSize.setBounds(200,125,50,20);
+		add(comboBoxFontSize);
 		
 		JLabel pathLabel = new JLabel("Escolha o destino dos arquivos:");
 		pathLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		pathLabel.setBounds(25, 150, 350, 30);
+		pathLabel.setBounds(initialXPosition, 180, 350, 30);
 		add(pathLabel);
 		
 		selectedPathLabel = new JTextField();  
-		selectedPathLabel.setBounds(200, 150, 300, 30);  
+		selectedPathLabel.setBounds(200, 180, 300, 30);  
 		selectedPathLabel.setEditable(false);
 		add(selectedPathLabel);
 		
 		pathSelectionButton = new JButton("Selecione...");
-		pathSelectionButton.setBounds(25,180,100,20);
+		pathSelectionButton.setBounds(initialXPosition,210,100,20);
 		selectedPathLabel.setVisible(false);
 		add(pathSelectionButton);
 		
 		generateButton = new JButton("Gerar");
-		generateButton.setBounds(25,250,100,20);
+		generateButton.setBounds(initialXPosition,(main.windowHeight - 100),100,20);
 		add(generateButton);
 		
 		generateButton.addActionListener(this);
@@ -60,10 +73,12 @@ public class GeneratorPanel extends JPanel implements ActionListener{
 
 	public void actionPerformed(ActionEvent e) {
 		
+		InputData formData = new InputData();
+		
 		if(e.getSource() == generateButton) {
 		
 			String patientName = inputNameTextField.getText();
-			System.out.println("patientName : " +patientName);
+			String fontSize = (String) comboBoxFontSize.getItemAt( comboBoxFontSize.getSelectedIndex() );  
 			
 			if( selectedPath == null || selectedPath.isBlank() ) {
 				System.out.println("selectedPath not selected");
@@ -75,10 +90,14 @@ public class GeneratorPanel extends JPanel implements ActionListener{
 				return;
 			}
 			
+			formData.setPatientFullName( patientName );
+			formData.setFontSize( Integer.parseInt( fontSize ) );
+			formData.setSelectedPath( selectedPath );
+			
 			GeneratorService service = new GeneratorService();
 			try {
 				
-				service.generatePdfs(patientName, selectedPath);
+				service.generatePdfs( formData );
 				
 			} catch (FileNotFoundException error) {
 				error.printStackTrace();

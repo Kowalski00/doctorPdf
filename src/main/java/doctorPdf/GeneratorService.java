@@ -21,7 +21,7 @@ public class GeneratorService {
 	public GeneratorService() {
 	}
 	
-	public void generatePdfs(String patientName, String selectedPath) throws FileNotFoundException {
+	public void generatePdfs(InputData inputs) throws FileNotFoundException {
 		
 		PdfReader reader;
 		PdfWriter writer;
@@ -30,19 +30,23 @@ public class GeneratorService {
 		try {
 			
 			reader = new PdfReader("src/main/resources/test.pdf");
-			writer = new PdfWriter(selectedPath + "/test-" + patientName + ".pdf");
+			writer = new PdfWriter(inputs.getSelectedPath() + "/test-" + inputs.getPatientFullName() + ".pdf");
 			
 		    pdfDocument = new PdfDocument(reader, writer);
 			
 			CompositeCleanupStrategy strategy = new CompositeCleanupStrategy();
-			strategy.add(new RegexBasedCleanupStrategy("DESENVOLVIMENTO DE SOFTWARES LTDA").setRedactionColor(ColorConstants.WHITE));
+			strategy.add(new RegexBasedCleanupStrategy("Brasileiro").setRedactionColor(ColorConstants.WHITE));
 			PdfCleaner.autoSweepCleanUp(pdfDocument, strategy);
 
 			for (IPdfTextLocation location : strategy.getResultantLocations()) {
 			    PdfPage page = pdfDocument.getPage(location.getPageNumber() + 1);
 			    PdfCanvas pdfCanvas = new PdfCanvas(page.newContentStreamAfter(), page.getResources(), page.getDocument());
 			    Canvas canvas = new Canvas(pdfCanvas, location.getRectangle());
-			    canvas.add(new Paragraph( patientName ).setFontSize(8).setMarginTop(0f));
+			    canvas.add(
+			    	new Paragraph( inputs.getPatientFullName() )
+			    		.setFontSize( inputs.getFontSize() )
+			    		.setMarginTop(0f)
+			    );
 			    canvas.close();
 			}
 		    

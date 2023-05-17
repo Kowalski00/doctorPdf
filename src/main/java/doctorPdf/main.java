@@ -23,6 +23,9 @@ import javax.swing.*;
 public class main extends JFrame{
 	
 	private static final long serialVersionUID = 8552414523972247073L;
+	protected static final int windowHeight = 450;
+	protected static final int windowWidth = 750;
+	private static final int windowInitialPosition = 100;
 	
 	static JPanel MainPanel;
 
@@ -37,7 +40,7 @@ public class main extends JFrame{
 	public main() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 508, 375);
+		setBounds(windowInitialPosition, windowInitialPosition, windowWidth, windowHeight);
 		
 		setTitle("PDF Generator");
 		
