@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 public class GeneratorPanel extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 2067580022728473760L;
+	
 	private static final int initialXPosition = 25;
 	private static final String[] fontSize = {"4","5","6","7","8","9","10","11","12","14","16","18"};
 	

@@ -49,6 +49,7 @@ public class main extends JFrame{
 		JMenuBar menuBar = new JMenuBar();
         
 		JMenuItem menuMain = new JMenuItem("Gerador");
+		JMenuItem menuKeywords = new JMenuItem("Palavras-Chave");
 		JMenuItem menuHelper = new JMenuItem("Ajuda");
         
         menuMain.addActionListener(new ActionListener() {
@@ -57,6 +58,16 @@ public class main extends JFrame{
         		genPanel.setBorder(BorderFactory.createTitledBorder("Gerador"));
         		getContentPane().removeAll();
         		getContentPane().add(genPanel, BorderLayout.CENTER);
+        		getContentPane().doLayout();
+    		}
+        });
+        
+        menuKeywords.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent event) {
+        		KeywordsPanel varsPanel = new KeywordsPanel();
+        		varsPanel.setBorder(BorderFactory.createTitledBorder("Palavras-Chave"));
+        		getContentPane().removeAll();
+        		getContentPane().add(varsPanel, BorderLayout.CENTER);
         		getContentPane().doLayout();
     		}
         });
@@ -72,6 +83,7 @@ public class main extends JFrame{
         });
         
         menuBar.add(menuMain);
+        menuBar.add(menuKeywords);
         menuBar.add(menuHelper);
         setJMenuBar(menuBar);
         
