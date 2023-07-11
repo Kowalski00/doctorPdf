@@ -55,7 +55,7 @@ public class main extends JFrame{
         menuMain.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent event) {
         		GeneratorPanel genPanel = new GeneratorPanel();
-        		genPanel.setBorder(BorderFactory.createTitledBorder("Gerador"));
+        		genPanel.setBorder(BorderFactory.createTitledBorder("Formulário"));
         		getContentPane().removeAll();
         		getContentPane().add(genPanel, BorderLayout.CENTER);
         		getContentPane().doLayout();
@@ -65,7 +65,7 @@ public class main extends JFrame{
         menuKeywords.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent event) {
         		KeywordsPanel varsPanel = new KeywordsPanel();
-        		varsPanel.setBorder(BorderFactory.createTitledBorder("Palavras-Chave"));
+        		varsPanel.setBorder(BorderFactory.createTitledBorder("Inserir palavras-chave"));
         		getContentPane().removeAll();
         		getContentPane().add(varsPanel, BorderLayout.CENTER);
         		getContentPane().doLayout();
@@ -75,7 +75,7 @@ public class main extends JFrame{
         menuHelper.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent event) {
         		HelpPanel helpPanel = new HelpPanel();
-        		helpPanel.setBorder(BorderFactory.createTitledBorder("Ajuda"));
+        		helpPanel.setBorder(BorderFactory.createTitledBorder("Como utilizar?"));
         		getContentPane().removeAll();
         		getContentPane().add(helpPanel, BorderLayout.CENTER);
         		getContentPane().doLayout();
