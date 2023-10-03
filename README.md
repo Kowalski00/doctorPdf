@@ -1,7 +1,7 @@
 # doctorPdf
 Editor to quickly generate pdf's
 
-1. V1 - Base
+**1. V1 - Base**
 
 Should be simple and useful.
 
