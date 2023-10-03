@@ -18,14 +18,13 @@ public class KeywordsPanel extends JPanel{
 	private static final int tableHeigth = (main.windowHeight - 300);
 	
 	private static final String columnsLabels[]={"Título","Palavra-Chave"};
+	private static final String data[][]={ {"Qual o nome do paciente?","!name"},{"Qual a idade do paciente?","!age"},{"Qual a altura do paciente(cm)?","!height"} };
 	
 	JFrame f;
 
 	public KeywordsPanel() {
 		
 		setLayout(null);
-		
-	    String data[][]={ {"Amit","670000"},{"Jai","780000"},{"Sachin","700000"},{"Jai","780000"},{"Sachin","700000"},{"Jai","780000"},{"Sachin","700000"},{"Jai","780000"}};
 	    
 	    final JTable keywordsTable = new JTable(data,columnsLabels);
 	    keywordsTable.setCellSelectionEnabled(true);
@@ -33,27 +32,31 @@ public class KeywordsPanel extends JPanel{
         ListSelectionModel cellSelection = keywordsTable.getSelectionModel();
         cellSelection.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
-        cellSelection.addListSelectionListener(new ListSelectionListener() {
-        	
-            public void valueChanged(ListSelectionEvent event) {
-            	
-            	String Data = null;
-            	int[] row = keywordsTable.getSelectedRows();
-            	int[] columns = keywordsTable.getSelectedColumns();
-            	
-            	for (int i = 0; i < row.length; i++) {
-            		for (int j = 0; j < columns.length; j++) {
-            			Data = (String) keywordsTable.getValueAt(row[i], columns[j]);
-            		}
-            	}
-            	System.out.println("Table element selected is: " + Data);
-            }
-        });
+//        cellSelection.addListSelectionListener(new ListSelectionListener() {
+//        	
+//            public void valueChanged(ListSelectionEvent event) {
+//            	
+//            	String Data = null;
+//            	int[] row = keywordsTable.getSelectedRows();
+//            	int[] columns = keywordsTable.getSelectedColumns();
+//            	
+//            	for (int i = 0; i < row.length; i++) {
+//            		for (int j = 0; j < columns.length; j++) {
+//            			Data = (String) keywordsTable.getValueAt(row[i], columns[j]);
+//            		}
+//            	}
+//            	System.out.println("Table element selected is: " + Data);
+//            }
+//        });
         
         JScrollPane scrollPane = new JScrollPane(keywordsTable);
 	    
 	    scrollPane.setBounds(initialXPosition, initialYPosition, tableWidth, tableHeigth);
 	    
 	    add(scrollPane);
+	}
+	
+	public String[][] getDataCsv() {
+		return data;
 	}
 }

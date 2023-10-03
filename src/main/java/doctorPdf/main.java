@@ -65,7 +65,7 @@ public class main extends JFrame{
         menuKeywords.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent event) {
         		KeywordsPanel varsPanel = new KeywordsPanel();
-        		varsPanel.setBorder(BorderFactory.createTitledBorder("Inserir palavras-chave"));
+        		varsPanel.setBorder(BorderFactory.createTitledBorder("Visualizar palavras-chave"));
         		getContentPane().removeAll();
         		getContentPane().add(varsPanel, BorderLayout.CENTER);
         		getContentPane().doLayout();
