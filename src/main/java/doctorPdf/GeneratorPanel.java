@@ -22,7 +22,7 @@ public class GeneratorPanel extends JPanel implements ActionListener{
 	private static final int firstInputYPosition = 75;
 	private static final String[] fontSize = {"4","5","6","7","8","9","10","11","12","14","16","18"};
 	
-	private JTextField inputNameTextField;
+	private JTextField inputField;
 	private JComboBox comboBoxFontSize;
 	private JButton generateButton, pathSelectionButton;
 	private JTextField selectedPathLabel;
@@ -38,6 +38,8 @@ public class GeneratorPanel extends JPanel implements ActionListener{
 		
 		this.createForm(keywordsData);
 		
+		this.createTargetFileInput();
+		
 //		JLabel fontLabel = new JLabel("Selecione o tamanho da fonte: ");
 //		fontLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 //		fontLabel.setBounds(initialXPosition, 120, 350, 30);
@@ -47,27 +49,11 @@ public class GeneratorPanel extends JPanel implements ActionListener{
 //		comboBoxFontSize.setBounds(200,125,50,20);
 //		add(comboBoxFontSize);
 		
-//		JLabel pathLabel = new JLabel("Escolha o destino dos arquivos:");
-//		pathLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-//		pathLabel.setBounds(initialXPosition, 180, 350, 30);
-//		add(pathLabel);
-//		
-//		selectedPathLabel = new JTextField();  
-//		selectedPathLabel.setBounds(200, 180, 300, 30);  
-//		selectedPathLabel.setEditable(false);
-//		add(selectedPathLabel);
-//		
-//		pathSelectionButton = new JButton("Selecione...");
-//		pathSelectionButton.setBounds(initialXPosition,210,100,20);
-//		selectedPathLabel.setVisible(false);
-//		add(pathSelectionButton);
-		
 		generateButton = new JButton("Gerar");
 		generateButton.setBounds(initialXPosition,(main.windowHeight - 100),100,20);
 		add(generateButton);
 		
 		generateButton.addActionListener(this);
-//		pathSelectionButton.addActionListener(this);
 		 
 	}
 
@@ -77,8 +63,8 @@ public class GeneratorPanel extends JPanel implements ActionListener{
 		
 		if(e.getSource() == generateButton) {
 		
-			String patientName = inputNameTextField.getText();
-			String fontSize = (String) comboBoxFontSize.getItemAt( comboBoxFontSize.getSelectedIndex() );  
+			String patientName = inputField.getText();
+//			String fontSize = (String) comboBoxFontSize.getItemAt( comboBoxFontSize.getSelectedIndex() );  
 			
 			if( selectedPath == null || selectedPath.isBlank() ) {
 				System.out.println("selectedPath not selected");
@@ -91,7 +77,8 @@ public class GeneratorPanel extends JPanel implements ActionListener{
 			}
 			
 			formData.setPatientFullName( patientName );
-			formData.setFontSize( Integer.parseInt( fontSize ) );
+			formData.setFontSize( 8 );
+//			formData.setFontSize( Integer.parseInt( fontSize ) );
 			formData.setSelectedPath( selectedPath );
 			
 			GeneratorService service = new GeneratorService();
@@ -133,12 +120,32 @@ public class GeneratorPanel extends JPanel implements ActionListener{
 			inputLabel.setBounds(initialXPosition, questionHeights, 350, 30);
 			add(inputLabel);
 			
-			inputNameTextField = new JTextField();  
-			inputNameTextField.setBounds(initialXPosition,inputHeights,350,20);
-			add(inputNameTextField);
+			inputField = new JTextField();  
+			inputField.setBounds(initialXPosition,inputHeights,350,20);
+			add(inputField);
 			
 			questionHeights += 60;
 			inputHeights += 60;
 		}
+	}
+	
+	private void createTargetFileInput() {
+		
+		JLabel pathLabel = new JLabel("Escolha o destino dos arquivos:");
+		pathLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		pathLabel.setBounds(initialXPosition, (main.windowHeight - 200), 350, 30);
+		add(pathLabel);
+		
+		selectedPathLabel = new JTextField();  
+		selectedPathLabel.setBounds(200, (main.windowHeight - 200), 300, 30);  
+		selectedPathLabel.setEditable(false);
+		add(selectedPathLabel);
+		
+		pathSelectionButton = new JButton("Selecione...");
+		pathSelectionButton.setBounds(initialXPosition,(main.windowHeight - 170),100,20);
+		selectedPathLabel.setVisible(false);
+		add(pathSelectionButton);
+
+		pathSelectionButton.addActionListener(this);
 	}
 }
