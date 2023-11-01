@@ -1,17 +1,15 @@
 package doctorPdf;
 
+import java.util.List;
+
+import javax.swing.JTextField;
+
 public class InputData {
 	
-	private String patientFullName;
 	private String selectedPath;
 	private int fontSize;
+	private List<JTextField> answers;
 	
-	public String getPatientFullName() {
-		return patientFullName;
-	}
-	public void setPatientFullName(String patientFullName) {
-		this.patientFullName = patientFullName;
-	}
 	public String getSelectedPath() {
 		return selectedPath;
 	}
@@ -25,4 +23,11 @@ public class InputData {
 		this.fontSize = fontSize;
 	}
 	
+	public List<JTextField> getAnswers() {
+		return this.answers;
+	}
+	
+	public void setAnswers(List<JTextField> answers) {
+		this.answers = answers;
+	}
 }
