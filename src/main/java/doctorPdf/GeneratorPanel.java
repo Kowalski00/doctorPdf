@@ -4,7 +4,9 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,7 +24,7 @@ public class GeneratorPanel extends JPanel implements ActionListener{
 	private static final int firstInputYPosition = 75;
 	private static final String[] fontSize = {"4","5","6","7","8","9","10","11","12","14","16","18"};
 	
-	private JTextField inputField;
+	private List<JTextField> answerFields = new ArrayList<JTextField>();
 	private JComboBox comboBoxFontSize;
 	private JButton generateButton, pathSelectionButton;
 	private JTextField selectedPathLabel;
@@ -63,7 +65,6 @@ public class GeneratorPanel extends JPanel implements ActionListener{
 		
 		if(e.getSource() == generateButton) {
 		
-			String patientName = inputField.getText();
 //			String fontSize = (String) comboBoxFontSize.getItemAt( comboBoxFontSize.getSelectedIndex() );  
 			
 			if( selectedPath == null || selectedPath.isBlank() ) {
@@ -71,15 +72,10 @@ public class GeneratorPanel extends JPanel implements ActionListener{
 				return;
 			}
 			
-			if( patientName == null || patientName.isBlank() ) {
-				System.out.println("patientName is blank");
-				return;
-			}
-			
-			formData.setPatientFullName( patientName );
 			formData.setFontSize( 8 );
 //			formData.setFontSize( Integer.parseInt( fontSize ) );
 			formData.setSelectedPath( selectedPath );
+			formData.setAnswers(this.answerFields);
 			
 			GeneratorService service = new GeneratorService();
 			try {
@@ -110,22 +106,27 @@ public class GeneratorPanel extends JPanel implements ActionListener{
 		
 		Integer questionHeights = firstQuestionLabelYPosition;
 		Integer inputHeights = firstInputYPosition;
+		Integer indexAnswer = 0;
 		
 		for (String[] strings : keywordsData) {
-			System.out.println("strings[0] : "+strings[0]);
-			System.out.println("strings[1] : "+strings[1]);
 			
-			JLabel inputLabel = new JLabel( strings[0] );
+			String question = strings[0];
+			String keyword = strings[1];
+			
+			JLabel inputLabel = new JLabel( question );
 			inputLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			inputLabel.setBounds(initialXPosition, questionHeights, 350, 30);
 			add(inputLabel);
 			
-			inputField = new JTextField();  
+			JTextField inputField = new JTextField();
+			inputField.setName( keyword );
 			inputField.setBounds(initialXPosition,inputHeights,350,20);
 			add(inputField);
+			this.answerFields.add(inputField);
 			
 			questionHeights += 60;
 			inputHeights += 60;
+			indexAnswer++;
 		}
 	}
 	
